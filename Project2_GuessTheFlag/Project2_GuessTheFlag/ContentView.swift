@@ -21,7 +21,7 @@ struct ContentView: View {
 
     var body: some View {
       ZStack {
-        let gradient = Gradient(colors: [.blue, .gray])
+        let gradient = Gradient(colors: [.mint, .gray])
         LinearGradient(gradient: gradient, startPoint: .top, endPoint: .bottom)
           .ignoresSafeArea()
 
@@ -31,8 +31,7 @@ struct ContentView: View {
               .foregroundColor(.white)
               .font(.subheadline.weight(.heavy))
             Text(countries[correctAnswer].uppercased())
-              .foregroundColor(.white)
-              .font(.largeTitle.weight(.semibold))
+              .blueTitle()
           }
 
           Spacer()
@@ -42,10 +41,7 @@ struct ContentView: View {
               flagTapped(number)
             }
             label: {
-              Image(countries[number])
-                .renderingMode(.original)
-                .clipShape(Capsule())
-                .shadow(radius: 5)
+              FlagImage(countries[number])
             }
           }
 
@@ -103,6 +99,14 @@ struct ContentView: View {
     score = 0
     askQuestion()
   }
+
+  func FlagImage(_ imageURL: String) -> some View {
+    Image(imageURL)
+      .renderingMode(.original)
+      .clipShape(Capsule())
+      .shadow(radius: 5)
+  }
+
 }
 
 struct ContentView_Previews: PreviewProvider {
@@ -110,3 +114,18 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
+struct BlueTitle: ViewModifier {
+  func body(content: Content) -> some View {
+    content
+      .foregroundColor(.blue)
+      .font(.largeTitle.weight(.heavy))
+  }
+}
+
+extension View {
+  func blueTitle() -> some View {
+    modifier(BlueTitle())
+  }
+}
+
